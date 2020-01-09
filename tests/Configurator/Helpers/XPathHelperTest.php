@@ -150,10 +150,6 @@ class XPathHelperTest extends Test
 				'foo or _bar'
 			],
 			[
-				'foo = "bar',
-				new RuntimeException("Cannot parse XPath expression 'foo = \"bar'")
-			],
-			[
 				'100 * (315 + 30) div 560',
 				'100*(315+30)div560'
 			],
