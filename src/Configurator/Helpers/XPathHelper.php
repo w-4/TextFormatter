@@ -139,8 +139,29 @@ abstract class XPathHelper
 		// Remove the space between the div operator the next token
 		$expr = preg_replace('/([^-a-z_0-9]div) (?=[$0-9@])/', '$1', $expr);
 
+		// Remove consecutive parentheses where redundant
+		$expr = self::removeRedundantParentheses($expr);
+
 		// Restore the literals
 		$expr = self::decodeStrings($expr);
+
+		return $expr;
+	}
+
+	/**
+	* Remove consecutive parentheses where redundant
+	*
+	* @param  string $expr
+	* @return string
+	*/
+	protected static function removeRedundantParentheses(string $expr): string
+	{
+		$regexp = '(\\(\\s*+()\\s*+\\))';
+		do
+		{
+			$expr = preg_replace($regexp, '$1', $expr, -1, $cnt);
+		}
+		while ($cnt > 0);
 
 		return $expr;
 	}
