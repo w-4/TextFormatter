@@ -156,12 +156,8 @@ abstract class XPathHelper
 	*/
 	protected static function removeRedundantParentheses(string $expr): string
 	{
-		$regexp = '(\\(\\s*+()\\s*+\\))';
-		do
-		{
-			$expr = preg_replace($regexp, '$1', $expr, -1, $cnt);
-		}
-		while ($cnt > 0);
+		preg_match_all('([\\(\\)]|[^\\(\\)]++)', $expr, $m);
+		print_r($m[0]);
 
 		return $expr;
 	}
