@@ -174,7 +174,7 @@ abstract class XPathHelper
 				{
 					throw new RuntimeException("Cannot parse XPath expression '" . $expr . "'");
 				}
-				if ($tokens[$left[$depth] + 1] === '(')
+				if ($tokens[$k - 1] === ')' && $left[$depth] + 1] === '(')
 				{
 					$tokens[$k] = $tokens[$left[$depth] + 1] = '';
 				}
