@@ -159,8 +159,9 @@ abstract class XPathHelper
 		preg_match_all('([\\(\\)]|[^\\(\\)]++)', $expr, $m);
 		$tokens = $m[0];
 
-		$left  = [];
-		$depth = 0;
+		$depth  = 0;
+		$left   = [];
+		$remove = [];
 		foreach ($tokens as $k => $token)
 		{
 			if ($token === '(')
@@ -174,14 +175,14 @@ abstract class XPathHelper
 				{
 					throw new RuntimeException("Cannot parse XPath expression '" . $expr . "'");
 				}
-				if ($tokens[$k - 1] === ')' && $left[$depth] + 1] === '(')
+				if ($tokens[$k - 1] === ')' && $tokens[$left[$depth] + 1] === '(')
 				{
-					$tokens[$k] = $tokens[$left[$depth] + 1] = '';
+					$remove[$k] = $remove[$left[$depth] + 1] = 1;
 				}
 			}
 		}
 
-		return implode('', $tokens);
+		return implode('', array_diff_key($tokens, $remove));
 	}
 
 	/**
