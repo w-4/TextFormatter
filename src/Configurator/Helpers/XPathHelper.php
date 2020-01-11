@@ -111,13 +111,21 @@ abstract class XPathHelper
 	*/
 	public static function minify($expr)
 	{
+		$expr = trim($expr);
+
+		// Test whether there's any characters that can be removed
+		if (!preg_match('([\\s\\)])', $expr))
+		{
+			return $expr;
+		}
+
 		preg_match_all('("[^"]*+"|\'[^\']*+\'|[\'"](*:X))', $expr, $m);
 		if (!empty($m['MARK']))
 		{
 			throw new RuntimeException("Cannot parse XPath expression '" . $expr . "'");
 		}
 
-		// Trim the surrounding whitespace then temporarily remove literal strings
+		// Temporarily encode the content of literal strings
 		$expr = self::encodeStrings(trim($expr));
 
 		// Normalize whitespace to a single space

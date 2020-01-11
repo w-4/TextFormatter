@@ -69,6 +69,10 @@ class MinifyXPathExpressionsTest extends AbstractTest
 				'<b title="{ &quot;&amp;lt;&quot; }"/>',
 				'<b title="{&quot;&amp;lt;&quot;}"/>'
 			],
+			[
+				'<b title="{(1+1)}"/>',
+				'<b title="{1+1}"/>'
+			],
 		];
 	}
 }
