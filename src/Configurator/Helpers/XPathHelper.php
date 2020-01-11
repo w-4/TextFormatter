@@ -157,22 +157,31 @@ abstract class XPathHelper
 	protected static function removeRedundantParentheses(string $expr): string
 	{
 		preg_match_all('([\\(\\)]|[^\\(\\)]++)', $expr, $m);
+		$tokens = $m[0];
 
+		$left  = [];
 		$depth = 0;
-		foreach ($m[0] as $k => $token)
+		foreach ($tokens as $k => $token)
 		{
 			if ($token === '(')
 			{
+				$left[$depth] = $k;
 				++$depth;
 			}
 			elseif ($token === ')')
 			{
-				--$depth;
+				if (--$depth < 0)
+				{
+					throw new RuntimeException("Cannot parse XPath expression '" . $expr . "'");
+				}
+				if ($tokens[$left[$depth] + 1] === '(')
+				{
+					$tokens[$k] = $tokens[$left[$depth] + 1] = '';
+				}
 			}
 		}
-		print_r($m[0]);
 
-		return $expr;
+		return implode('', $tokens);
 	}
 
 	/**
