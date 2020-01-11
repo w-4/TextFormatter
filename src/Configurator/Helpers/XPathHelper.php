@@ -177,8 +177,7 @@ abstract class XPathHelper
 				}
 				if ($tokens[$k + 1] === ')' && $left[$depth - 1] === $left[$depth] - 1)
 				{
-					unset($tokens[$k]);
-					unset($tokens[$left[$depth]]);
+					unset($tokens[$k], $tokens[$left[$depth]]);
 				}
 			}
 		}
