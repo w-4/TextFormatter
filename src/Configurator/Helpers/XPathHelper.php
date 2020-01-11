@@ -169,7 +169,7 @@ abstract class XPathHelper
 		$tokens[] = '';
 
 		$depth = 0;
-		$left  = [-1 => -1];
+		$left  = [-1 => null];
 		foreach ($tokens as $k => $token)
 		{
 			if ($token === '(')
@@ -185,7 +185,7 @@ abstract class XPathHelper
 				}
 
 				$leftIsPrecededByLeftParenthesis   = ($left[$depth - 1] === $left[$depth] - 1);
-				$rightIsFollowedByRightParenthesis = ($tokens[$k + 1] === ')');
+				$rightIsFollowedByRightParenthesis = ($tokens[$k + 1]   === ')');
 				if ($leftIsPrecededByLeftParenthesis && $rightIsFollowedByRightParenthesis)
 				{
 					unset($tokens[$k], $tokens[$left[$depth]]);
