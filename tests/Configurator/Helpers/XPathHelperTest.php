@@ -142,8 +142,8 @@ class XPathHelperTest extends Test
 				'@foo- -1=2'
 			],
 			[
-				'( ( ( 1 + 1 ) * 1 ) * 1 )',
-				'(((1+1)*1)*1)'
+				'1 + ( ( ( 1 + 1 ) * 1 ) * 1 )',
+				'1+(((1+1)*1)*1)'
 			],
 			[
 				' foo or _bar ',
@@ -178,6 +178,10 @@ class XPathHelperTest extends Test
 				'2*(1+1)'
 			],
 			[
+				'(1 + 1) * (1 + 1)',
+				'(1+1)*(1+1)'
+			],
+			[
 				'2 * ( ( 1 + 1 ) )',
 				'2*(1+1)'
 			],
@@ -188,6 +192,10 @@ class XPathHelperTest extends Test
 			[
 				'2 * ( ( ( 1 + 1 ) + ( 1 + 1 ) ) )',
 				'2*((1+1)+(1+1))'
+			],
+			[
+				'1)',
+				new RuntimeException("Cannot parse XPath expression '1)'")
 			],
 		];
 	}
