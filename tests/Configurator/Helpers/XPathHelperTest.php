@@ -195,7 +195,7 @@ class XPathHelperTest extends Test
 			],
 			[
 				'1)',
-				'1)'
+				new RuntimeException("Cannot parse XPath expression '1)'")
 			],
 			[
 				'(1)',

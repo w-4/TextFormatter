@@ -169,10 +169,17 @@ abstract class XPathHelper
 				$left[$depth] = $k;
 				++$depth;
 			}
-			elseif ($token === ')' && --$depth >= 0 && $tokens[$k + 1] === ')' && $left[$depth - 1] === $left[$depth] - 1)
+			elseif ($token === ')')
 			{
-				unset($tokens[$k]);
-				unset($tokens[$left[$depth]]);
+				if (--$depth < 0)
+				{
+					throw new RuntimeException("Cannot parse XPath expression '" . $expr . "'");
+				}
+				if ($tokens[$k + 1] === ')' && $left[$depth - 1] === $left[$depth] - 1)
+				{
+					unset($tokens[$k]);
+					unset($tokens[$left[$depth]]);
+				}
 			}
 		}
 
