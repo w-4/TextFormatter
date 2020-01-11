@@ -183,10 +183,7 @@ abstract class XPathHelper
 				{
 					throw new RuntimeException("Cannot parse XPath expression '" . $expr . "'");
 				}
-
-				$leftIsPrecededByLeftParenthesis   = ($left[$depth - 1] === $left[$depth] - 1);
-				$rightIsFollowedByRightParenthesis = ($tokens[$k + 1]   === ')');
-				if ($leftIsPrecededByLeftParenthesis && $rightIsFollowedByRightParenthesis)
+				if ($tokens[$k + 1] === ')' && $left[$depth - 1] === $left[$depth] - 1)
 				{
 					unset($tokens[$k], $tokens[$left[$depth]]);
 				}
